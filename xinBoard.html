@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>it's a xingen</title>
+		<meta charset="utf-8"/>
+		<style>
+			body{
+				background-color: rgb(0,0,0);
+			}
+			#yeah {
+				position: absolute;
+				left:0px;
+				top:0px;
+			}
+		</style>
+		<!-- <script language="javascript" src="Wellrng.js"></script> -->
+		<!-- <script language="javascript" src="combinatorics.js"></script> -->
+		<script language="javascript" src="xinfaces.js"></script>
+		<script language="javascript">
+			
+			var faceGenerator = xinGenerator()
+			
+			function layThem(canvas, seed, spacing, iconSpan, frontCol, backCol) {
+				var con = canvas.getContext('2d');
+				con.fillStyle = backCol;
+				con.fillRect(0, 0, canvas.width, canvas.height);
+				var iconSeparation = 210
+				var nx = Math.floor((canvas.width - iconSeparation)/iconSeparation) + 1
+				var ny = Math.floor((canvas.height - iconSeparation)/iconSeparation) + 1
+				for(var ix=0; ix < nx; ++ix){
+					for(var iy=0; iy < ny; ++iy){
+						con.save()
+						con.translate(iconSeparation/2 + iconSeparation*ix, iconSeparation/2 + iconSeparation*iy)
+						drawFace(con, randomSpecimen(faceGenerator), frontCol, backCol, 17, 49, 6)
+						con.fill()
+						con.restore()
+					}
+				}
+				
+			};
+			
+			var originSeed;
+			function lay(){
+				originSeed = Math.floor(Math.random()*3132);
+				layThem(c, originSeed, 64, 0.43, 'rgb(220,220,220)', 'rgb(0,0,0)');
+			};
+			
+			var c;
+			window.onload = function(){
+				console.log('state space is '+faceGenerator.count())
+				c = document.createElement('canvas');
+				c.id = 'yeah';
+				c.width = window.innerWidth;
+				c.height = window.innerHeight;
+				document.body.appendChild(c);
+				lay();
+			};
+			window.addEventListener('mousedown', lay);
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
